@@ -2,7 +2,7 @@
     %global _lto_cflags %nil
 %endif
 
-# Telegram Desktop's constants...
+# AyuGram Desktop's constants...
 %global appname AyuGramDesktop
 
 # Reducing debuginfo verbosity...
@@ -13,7 +13,7 @@ Version: 6.3.10
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
-# * Telegram Desktop - GPL-3.0-or-later with OpenSSL exception -- main tarball;
+# * AyuGram Desktop - GPL-3.0-or-later with OpenSSL exception -- main tarball;
 # * tg_owt - BSD-3-Clause AND BSD-2-Clause AND Apache-2.0 AND MIT AND LicenseRef-Fedora-Public-Domain -- static dependency;
 # * rlottie - LGPL-2.1-or-later AND FTL AND BSD-3-Clause -- static dependency;
 # * cld3  - Apache-2.0 -- static dependency;
@@ -28,7 +28,7 @@ Source0: AyuGramDesktop-%{version}-full.tar.gz
 
 Patch0: findprotobuf_fix.patch
 
-# Telegram Desktop require more than 8 GB of RAM on linking stage.
+# AyuGram Desktop require more than 8 GB of RAM on linking stage.
 # Disabling all low-memory architectures.
 ExclusiveArch: x86_64 aarch64
 
@@ -173,7 +173,7 @@ they can't ban you, except if you're doing bad things that violate user ToS.
 We are not responsible for the possible blocking of your account. Use the client at your own risk.
 
 %prep
-# Unpacking Telegram Desktop source archive...
+# Unpacking AyuGram Desktop source archive...
 %autosetup -n %{appname}-%{version}-full -p1
 
 # Unbundling libraries... except minizip
@@ -182,7 +182,7 @@ rm -rf Telegram/ThirdParty/{GSL,QR,dispatch,expected,fcitx5-qt,hime,hunspell,kim
 sed -i "/#include <openssl\/engine.h>/d" Telegram/SourceFiles/core/utils.cpp
 
 %build
-# Building Telegram Desktop using cmake...
+# Building AyuGram Desktop using cmake...
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_AR=%{_bindir}/gcc-ar \
