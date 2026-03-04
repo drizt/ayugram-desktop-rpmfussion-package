@@ -27,8 +27,6 @@ Summary: Desktop Telegram client with good customization and Ghost mode
 Source0: AyuGramDesktop-%{version}-full.tar.gz
 
 Patch0: findprotobuf_fix.patch
-Patch1: 0001-feat-option-to-hide-premium-emoji-in-chat-list.patch
-
 # AyuGram Desktop require more than 8 GB of RAM on linking stage.
 # Disabling all low-memory architectures.
 ExclusiveArch: x86_64 aarch64
