@@ -27,6 +27,7 @@ Summary: Desktop Telegram client with good customization and Ghost mode
 Source0: AyuGramDesktop-%{version}-full.tar.gz
 
 Patch0: findprotobuf_fix.patch
+Patch1: 0001-feat-option-to-hide-premium-emoji-in-chat-list.patch
 
 # AyuGram Desktop require more than 8 GB of RAM on linking stage.
 # Disabling all low-memory architectures.
@@ -39,12 +40,14 @@ BuildRequires: cmake(Qt6Core)
 BuildRequires: cmake(Qt6Core5Compat)
 BuildRequires: cmake(Qt6DBus)
 BuildRequires: cmake(Qt6Gui)
+BuildRequires: cmake(Qt6GuiPrivate)
 BuildRequires: cmake(Qt6Network)
 BuildRequires: cmake(Qt6OpenGL)
 BuildRequires: cmake(Qt6OpenGLWidgets)
 BuildRequires: cmake(Qt6Svg)
 BuildRequires: cmake(Qt6WaylandClient)
 BuildRequires: cmake(Qt6Widgets)
+BuildRequires: cmake(Qt6WidgetsPrivate)
 BuildRequires: cmake(fmt)
 BuildRequires: cmake(range-v3)
 BuildRequires: cmake(tg_owt)
@@ -96,8 +99,6 @@ BuildRequires: libstdc++-devel
 BuildRequires: minizip-compat-devel
 BuildRequires: ninja-build
 BuildRequires: python3
-BuildRequires: qt6-qtbase-private-devel
-BuildRequires: qt6-qtbase-static
 BuildRequires: pkgconfig(openh264)
 BuildRequires: cmake(KF6CoreAddons)
 BuildRequires: cmake(tde2e)
@@ -179,8 +180,6 @@ We are not responsible for the possible blocking of your account. Use the client
 # Unbundling libraries... except minizip
 rm -rf Telegram/ThirdParty/{GSL,QR,dispatch,expected,fcitx5-qt,hime,hunspell,kimageformats,lz4,nimf,range-v3,xxHash}
 
-sed -i "/#include <openssl\/engine.h>/d" Telegram/SourceFiles/core/utils.cpp
-
 %build
 # Building AyuGram Desktop using cmake...
 %cmake -G Ninja \
@@ -202,18 +201,18 @@ sed -i "/#include <openssl\/engine.h>/d" Telegram/SourceFiles/core/utils.cpp
 %cmake_install
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
-desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.ayugram.desktop.metainfo.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/com.ayugram.desktop.desktop
 
 %files
 %doc README.md changelog.txt
 %license LICENSE LEGAL
 %{_bindir}/AyuGram
-%{_datadir}/applications/*.desktop
+%{_datadir}/applications/com.ayugram.desktop.desktop
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/*/apps/*.svg
 %{_datadir}/dbus-1/services/com.ayugram.desktop.service
-%{_metainfodir}/*.metainfo.xml
+%{_metainfodir}/com.ayugram.desktop.metainfo.xml
 
 %changelog
 * Mon Feb 02 2026 Ivan Romanov <drizt72@zoho.eu> - 6.3.10-1
