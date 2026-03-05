@@ -26,7 +26,10 @@ URL: https://github.com/AyuGram/%{appname}
 Summary: Desktop Telegram client with good customization and Ghost mode
 Source0: AyuGramDesktop-%{version}-full.tar.gz
 
+# Fix searching protobuf cmake module
 Patch0: findprotobuf_fix.patch
+# Fix compilation with gcc16
+Patch1: gcc16.patch
 # AyuGram Desktop require more than 8 GB of RAM on linking stage.
 # Disabling all low-memory architectures.
 ExclusiveArch: x86_64 aarch64
@@ -158,18 +161,21 @@ Provides: bundled(minizip) = 1.2.13
 %description
 AyuGram is a Telegram client with a very pleasant features.
 
-Telegram is a messaging app with a focus on speed and security, it's super-fast, simple and free.
-You can use Telegram on all your devices at the same time - your messages
-sync seamlessly across any number of your phones, tablets or computers.
+Telegram is a messaging app with a focus on speed and security, it's
+super-fast, simple and free. You can use Telegram on all your devices at the
+same time - your messages sync seamlessly across any number of your phones,
+tablets or computers.
 
 AyuGram pretends to be an official application to Telegram.
-If you look at the list of sessions, you'll see yourself using a regular Telegram rather than AyuGram.
-Generally, developer ToS apply only to developers, by restricting their application keys.
-But since we're using official ones, Telegram can't block our client.
-And since it's applied only to developers,
-they can't ban you, except if you're doing bad things that violate user ToS.
+If you look at the list of sessions, you'll see yourself using a regular
+Telegram rather than AyuGram. Generally, developer ToS apply only to
+developers, by restricting their application keys. But since we're using
+official ones, Telegram can't block our client. And since it's applied only to
+developers, they can't ban you, except if you're doing bad things that violate
+user ToS.
 
-We are not responsible for the possible blocking of your account. Use the client at your own risk.
+We are not responsible for the possible blocking of your account. Use the
+client at your own risk.
 
 %prep
 # Unpacking AyuGram Desktop source archive...
