@@ -1,3 +1,4 @@
+# Avoid possible building crash on aarch64
 %ifarch aarch64
     %global _lto_cflags %nil
 %endif
@@ -5,7 +6,7 @@
 # AyuGram Desktop's constants...
 %global appname AyuGramDesktop
 
-# Reducing debuginfo verbosity...
+# Reducing debuginfo verbosity to avoid possible building crash on low-memory devices
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
 Name: ayugram-desktop
@@ -20,11 +21,20 @@ Release: 1%{?dist}
 # * open-sans-fonts  - Apache-2.0 -- bundled font;
 # * vazirmatn-fonts - OFL-1.1 -- bundled font.
 # * lib_icu - Unicode-3.0 -- static dependency;
-# * kcoreaddons - MPL-1.1 -- static dependency;
-License: GPL-3.0-or-later AND BSD-3-Clause AND BSD-2-Clause AND Apache-2.0 AND MIT AND LicenseRef-Fedora-Public-Domain AND LGPL-2.1-or-later AND FTL AND MPL-1.1 AND OFL-1.1 AND Unicode-3.0
+# * kcoreaddons - MPL-1.1 AND CC0-1.0 AND Artistic-1.0-Perl AND QPL-1.0 -- static dependency;
+# * expected-lite - BSL-1.0 -- only header lib
+# * minizip - Zlib -- static dependency;
+License: GPL-3.0-or-later AND BSD-3-Clause AND BSD-2-Clause AND Apache-2.0 AND MIT AND LicenseRef-Fedora-Public-Domain AND LGPL-2.1-or-later AND FTL AND MPL-1.1 AND OFL-1.1 AND Unicode-3.0 AND BSL-1.0 AND CC0-1.0 AND Zlib AND Artistic-1.0-Perl AND QPL-1.0
 URL: https://github.com/AyuGram/%{appname}
 Summary: Desktop Telegram client with good customization and Ghost mode
+
+# Upstream doesn't provide full source tarball. AyuGram splited to many git submodules.
+# Also it bundles some 3rd-party libraries. In most generating script does
+# git clone --recursive --branch "v${VERSION}" ...
+
+# create-ayugram-tarball-full.sh 6.3.10.
 Source0: AyuGramDesktop-%{version}-full.tar.gz
+Source1: create-ayugram-tarball-full.sh
 
 # Fix searching protobuf cmake module
 Patch0: findprotobuf_fix.patch
